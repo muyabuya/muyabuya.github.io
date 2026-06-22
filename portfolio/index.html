@@ -23,43 +23,32 @@
       <p>a gallery of sketches, paintings, and studies</p>
     </div>
 
-    <!-- Replace this grid with your actual artwork. Each .art-piece can wrap
-         an <img src="..."> once you have files to drop in an /assets folder. -->
-    <div style="display:flex; flex-wrap:wrap; gap:1.5rem; justify-content:center;">
-      <div class="sketch-border" style="width:220px; height:220px;">
-        <div class="content" style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; color:var(--ink-dim); font-family:'Caveat',cursive; font-size:1.1rem;">
-          <img src="MuyaWayne_RainbowClouds.png">
+    <!-- Each tile is a fixed-size box; the image inside is cropped to fill it
+         (object-fit: cover) so artwork of any resolution or aspect ratio
+         displays consistently instead of spilling out at full size.
+         To add a piece: drop the image file into /assets/art/ and add a
+         tile below pointing to it. -->
+    <div class="gallery-grid">
+      <div class="sketch-border art-tile">
+        <div class="content">
+          <img src="MuyaW_SenaTribute.png" alt="short description">
         </div>
       </div>
-      <div class="sketch-border" style="width:220px; height:220px;">
-        <div class="content" style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; color:var(--ink-dim); font-family:'Caveat',cursive; font-size:1.1rem;">
-           <img src="MuyaWayne_LandscapeInsideStillLife 2.png">
+      <div class="sketch-border art-tile">
+        <div class="content">
+          <span class="placeholder-text">drop artwork here</span>
         </div>
       </div>
-      <div class="sketch-border" style="width:220px; height:220px;">
-        <div class="content" style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; color:var(--ink-dim); font-family:'Caveat',cursive; font-size:1.1rem;">
-           <img src="MuyaW_SenaTribute.png"> 
-        </div>
-      </div>
-      <div class="sketch-border" style="width:220px; height:220px;">
-        <div class="content" style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; color:var(--ink-dim); font-family:'Caveat',cursive; font-size:1.1rem;">
-          drop artwork here
-        </div>
-      </div>
-      <div class="sketch-border" style="width:220px; height:220px;">
-        <div class="content" style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; color:var(--ink-dim); font-family:'Caveat',cursive; font-size:1.1rem;">
-          drop artwork here
-        </div>
-      </div>
-      <div class="sketch-border" style="width:220px; height:220px;">
-        <div class="content" style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; color:var(--ink-dim); font-family:'Caveat',cursive; font-size:1.1rem;">
-          drop artwork here
+      <div class="sketch-border art-tile">
+        <div class="content">
+          <span class="placeholder-text">drop artwork here</span>
         </div>
       </div>
     </div>
 
-     </div>
+  </div>
 
   <script src="../js/sketch-borders.js"></script>
+  <script src="../js/player.js"></script>
 </body>
 </html>
