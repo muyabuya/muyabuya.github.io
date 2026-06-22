@@ -7,48 +7,53 @@
   <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
-
   <nav class="site-nav sketch-border">
     <a href="../index.html" class="nav-link">Home</a>
     <a href="index.html" class="nav-link active">Gallery</a>
     <a href="../stone-heart/index.html" class="nav-link">STONE:HEART</a>
     <a href="../about.html" class="nav-link">About</a>
   </nav>
-
   <div class="page-wrap">
     <a href="../index.html" class="back-link">&larr; back home</a>
-
     <div class="page-header">
       <h2>Art</h2>
       <p>a gallery of sketches, paintings, and studies</p>
     </div>
-
-    <!-- Each tile is a fixed-size box; the image inside is cropped to fill it
-         (object-fit: cover) so artwork of any resolution or aspect ratio
-         displays consistently instead of spilling out at full size.
-         To add a piece: drop the image file into /assets/art/ and add a
-         tile below pointing to it. -->
     <div class="gallery-grid">
-      <div class="sketch-border art-tile">
+      <div class="sketch-border art-tile lightbox-trigger" data-full="MuyaW_SenaTribute.png" data-caption="Sena tribute piece">
         <div class="content">
-          <img src="MuyaW_SenaTribute.png">
+          <img src="MuyaW_SenaTribute.png" alt="Sena tribute piece">
         </div>
       </div>
-      <div class="sketch-border art-tile">
+      <div class="sketch-border art-tile lightbox-trigger" data-full="MuyaW_Metaphor.jpg" data-caption="Metaphor">
         <div class="content">
-          <img src="MuyaW_Metaphor.jpg">
+          <img src="MuyaW_Metaphor.jpg" alt="Metaphor">
         </div>
       </div>
-      <div class="sketch-border art-tile">
+      <div class="sketch-border art-tile lightbox-trigger" data-full="MuyaWayne_LandscapeInsideStillLife 2.png" data-caption="Landscape Inside Still Life">
         <div class="content">
-          <img src="MuyaWayne_LandscapeInsideStillLife 2.png">
+          <img src="MuyaWayne_LandscapeInsideStillLife 2.png" alt="Landscape Inside Still Life">
+        </div>
+      </div>
+      <div class="sketch-border art-tile lightbox-trigger" data-full="MuyaW_SenaTribute.png" data-caption="Metal Sculpture">
+        <div class="content">
+          <img src="MuyaW_MetalSculpture.png" alt="Metal Sculpture">
+        </div>
+      </div>
+      <div class="sketch-border art-tile lightbox-trigger" data-full="MuyaW_SenaTribute.png" data-caption="Light up Rubber Glove Sculpture">
+        <div class="content">
+          <img src="MuyaWayne_GloveSculpture.jpg" alt="Light up Rubber Glove Sculpture">
+        </div>
+      </div>
+         <div class="sketch-border art-tile lightbox-trigger" data-full="MuyaW_SenaTribute.png" data-caption="Light up Rubber Glove Sculpture">
+        <div class="content">
+          <img src="MuyaWayne_GloveSculpture.jpg" alt="Light up Rubber Glove Sculpture">
         </div>
       </div>
     </div>
-
   </div>
-
   <script src="../js/sketch-borders.js"></script>
+  <script src="../js/lightbox.js"></script>
   <script src="../js/player.js"></script>
 </body>
 </html>
