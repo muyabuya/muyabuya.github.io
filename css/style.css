@@ -243,7 +243,219 @@ a {
   padding-top: 2rem;
 }
 
+/* ---------- Site-wide music player ---------- */
+#site-player {
+  position: fixed;
+  bottom: 1.2rem;
+  right: 1.2rem;
+  z-index: 50;
+  background: var(--bg-dark);
+  max-width: 280px;
+}
+
+.player-content {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.7rem 1rem;
+}
+
+.player-btn {
+  background: none;
+  border: none;
+  color: var(--ink);
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: color 0.15s ease, transform 0.15s ease;
+}
+
+.player-btn svg {
+  width: 100%;
+  height: 100%;
+}
+
+.player-btn:hover {
+  color: #ffd23f;
+  transform: scale(1.1);
+}
+
+.btn-play {
+  width: 32px;
+  height: 32px;
+}
+
+.player-track {
+  font-family: 'Caveat', cursive;
+  font-size: 1.05rem;
+  color: var(--ink-dim);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 130px;
+}
+
+/* ---------- Gallery / artwork tiles ---------- */
+.gallery-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: center;
+}
+
+.art-tile {
+  width: 220px;
+  height: 220px;
+  overflow: hidden; /* clips anything that would otherwise overflow the box */
+}
+
+.art-tile .content {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.art-tile img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* fills the box, cropping rather than stretching or overflowing */
+  object-position: center;
+}
+
+.art-tile .placeholder-text {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink-dim);
+  font-family: 'Caveat', cursive;
+  font-size: 1.1rem;
+  text-align: center;
+  padding: 1rem;
+}
+
+/* ---------- Lightbox ---------- */
+#lightbox-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(20, 20, 20, 0.92);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease;
+}
+
+#lightbox-overlay.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.lightbox-stage {
+  max-width: 90vw;
+  max-height: 88vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.lightbox-img {
+  max-width: 90vw;
+  max-height: 80vh;
+  width: auto;
+  height: auto;
+  object-fit: contain; /* shows the WHOLE image at native aspect ratio, no cropping */
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+  border-radius: 4px;
+}
+
+.lightbox-caption {
+  font-family: 'Caveat', cursive;
+  font-size: 1.2rem;
+  color: var(--ink-dim);
+  text-align: center;
+  max-width: 70vw;
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 1.2rem;
+  right: 1.5rem;
+  background: none;
+  border: none;
+  color: var(--ink);
+  font-size: 2.5rem;
+  line-height: 1;
+  cursor: pointer;
+  z-index: 210;
+  transition: color 0.15s ease, transform 0.15s ease;
+}
+
+.lightbox-close:hover {
+  color: #ffd23f;
+  transform: scale(1.1);
+}
+
+.lightbox-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: var(--ink);
+  font-size: 2rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  z-index: 210;
+  display: flex;
+  align-items: center;
+  transition: color 0.15s ease, transform 0.15s ease;
+}
+
+.lightbox-nav:hover {
+  color: #ffd23f;
+}
+
+.lightbox-prev {
+  left: 0.5rem;
+}
+
+.lightbox-prev:hover {
+  transform: translateY(-50%) translateX(-3px);
+}
+
+.lightbox-next {
+  right: 0.5rem;
+}
+
+.lightbox-next:hover {
+  transform: translateY(-50%) translateX(3px);
+}
+
 @media (max-width: 600px) {
+  .lightbox-close {
+    top: 0.8rem;
+    right: 1rem;
+    font-size: 2rem;
+  }
+  .lightbox-nav {
+    font-size: 1.5rem;
+    padding: 0.4rem 0.6rem;
+  }
+  .lightbox-caption {
+    font-size: 1rem;
+    max-width: 85vw;
+  }
   .nav-link {
     font-size: 1.3rem;
     padding: 0 0.7rem;
@@ -251,5 +463,14 @@ a {
   .tile {
     width: 100%;
     max-width: 280px;
+  }
+  #site-player {
+    bottom: 0.8rem;
+    right: 0.8rem;
+    max-width: calc(100vw - 1.6rem);
+  }
+  .player-track {
+    max-width: 90px;
+    font-size: 0.95rem;
   }
 }
