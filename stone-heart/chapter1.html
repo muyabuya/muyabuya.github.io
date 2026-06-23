@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 1 &mdash; STONE:HEART</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    /* Reader-specific layout. Lives here rather than the shared stylesheet
+       since this view (full-bleed comic page + overlay controls) is
+       structurally different from the rest of the site's card-based pages. */
+
+    body.reader-active {
+      overflow: hidden;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .reader-wrap {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      background: #000;
+    }
+
+    .reader-topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.8rem 1.2rem;
+      background: var(--bg-dark);
+      z-index: 10;
+    }
+
+    .reader-topbar .back-link {
+      margin: 0;
+    }
+
+    .reader-page-counter {
+      font-family: 'Caveat', cursive;
+      font-size: 1.2rem;
+      color: var(--ink-dim);
+    }
+
+    .reader-stage {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      background: #000;
+    }
+
+    /* The actual page image. object-fit: contain preserves the full frame
+       at its native aspect ratio (16:9 for these pages) regardless of
+       viewport shape, never cropping any art. image-rendering keeps pixel
+       art crisp instead of blurring when the browser scales it up/down. */
+    .reader-page-img {
+      max-width: 100%;
+      max-height: 100%;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      image-rendering: pixelated;
+      image-rendering: -moz-crisp-edges;
+      image-rendering: crisp-edges;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+
+    .reader-nav-zone {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 35%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      z-index: 5;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+      background: linear-gradient(to var(--fade-dir, right), rgba(0,0,0,0.35), transparent);
+    }
+
+    .reader-nav-zone:hover {
+      opacity: 1;
+    }
+
+    .reader-nav-zone.prev-zone {
+      left: 0;
+      justify-content: flex-start;
+      padding-left: 1rem;
+      --fade-dir: right;
+    }
+
+    .reader-nav-zone.next-zone {
+      right: 0;
+      justify-content: flex-end;
+      padding-right: 1rem;
+      --fade-dir: left;
+      background: linear-gradient(to left, rgba(0,0,0,0.35), transparent);
+    }
+
+    .reader-nav-zone svg {
+      width: 48px;
+      height: 48px;
+      color: var(--ink);
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.6));
+    }
+
+    .reader-nav-zone.disabled {
+      pointer-events: none;
+      opacity: 0 !important;
+    }
+
+    .reader-bottombar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.6rem;
+      background: var(--bg-dark);
+      z-index: 10;
+    }
+
+    .page-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--ink-dim);
+      opacity: 0.4;
+      cursor: pointer;
+      transition: opacity 0.15s ease, transform 0.15s ease;
+      border: none;
+      padding: 0;
+    }
+
+    .page-dot:hover {
+      opacity: 0.8;
+      transform: scale(1.2);
+    }
+
+    .page-dot.active {
+      opacity: 1;
+      background: #ffd23f;
+    }
+
+    @media (max-width: 600px) {
+      .reader-nav-zone {
+        width: 25%;
+      }
+      .reader-nav-zone svg {
+        width: 32px;
+        height: 32px;
+      }
+      .reader-page-counter {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body class="reader-active">
+
+  <div class="reader-wrap">
+
+    <div class="reader-topbar sketch-border">
+      <a href="index.html" class="back-link content">&larr; STONE:HEART</a>
+      <div class="reader-page-counter content" id="page-counter">Page 1 / 1</div>
+    </div>
+
+    <div class="reader-stage">
+      <img id="page-img" class="reader-page-img" src="" alt="Comic page">
+
+      <div class="reader-nav-zone prev-zone" id="prev-zone" aria-label="Previous page">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M15.5 19l-7-7 7-7 1.5 1.5L11.5 12l5.5 5.5z"/></svg>
+      </div>
+      <div class="reader-nav-zone next-zone" id="next-zone" aria-label="Next page">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8.5 5l7 7-7 7L7 17.5l5.5-5.5L7 6.5z"/></svg>
+      </div>
+    </div>
+
+    <div class="reader-bottombar" id="page-dots"></div>
+
+  </div>
+
+  <script>
+    // ---- EDIT THIS LIST as you add pages to /stone-heart/pages/chapter1/ ----
+    const PAGES = [
+      "pages/chapter1/page01.png",
+      "pages/chapter1/page02.png",
+      "pages/chapter1/page03.png",
+    ];
+    // ---------------------------------------------------------------------
+
+    let current = 0;
+
+    const img = document.getElementById("page-img");
+    const counter = document.getElementById("page-counter");
+    const dotsWrap = document.getElementById("page-dots");
+    const prevZone = document.getElementById("prev-zone");
+    const nextZone = document.getElementById("next-zone");
+
+    function buildDots() {
+      dotsWrap.innerHTML = "";
+      PAGES.forEach((_, i) => {
+        const dot = document.createElement("button");
+        dot.className = "page-dot";
+        dot.setAttribute("aria-label", `Go to page ${i + 1}`);
+        dot.addEventListener("click", () => goTo(i));
+        dotsWrap.appendChild(dot);
+      });
+    }
+
+    function render() {
+      img.src = PAGES[current];
+      counter.textContent = `Page ${current + 1} / ${PAGES.length}`;
+
+      prevZone.classList.toggle("disabled", current === 0);
+      nextZone.classList.toggle("disabled", current === PAGES.length - 1);
+
+      const dots = dotsWrap.querySelectorAll(".page-dot");
+      dots.forEach((d, i) => d.classList.toggle("active", i === current));
+    }
+
+    function goTo(index) {
+      if (index < 0 || index >= PAGES.length) return;
+      current = index;
+      render();
+    }
+
+    function nextPage() { goTo(current + 1); }
+    function prevPage() { goTo(current - 1); }
+
+    prevZone.addEventListener("click", prevPage);
+    nextZone.addEventListener("click", nextPage);
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowRight") nextPage();
+      if (e.key === "ArrowLeft") prevPage();
+    });
+
+    buildDots();
+    render();
+  </script>
+
+  <script src="../js/comic-music-handoff.js"></script>
+</body>
+</html>
