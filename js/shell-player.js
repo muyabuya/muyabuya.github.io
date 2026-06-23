@@ -1,12 +1,25 @@
 
 const PLAYLIST = [
-   { title: "STONE", src: "audio/coles-theme.mp3" },
+  { title: "STONE", src: "audio/coles-theme.mp3" },
   { title: "BURNT HEART", src: "audio/jades-theme.mp3" },
   { title: "ACE UP YOUR SLEEVE!", src: "audio/aces-theme.mp3" },
   { title: "Sunkissed", src: "audio/beris-theme.mp3" },
   { title: "Trinity", src: "audio/novas-theme.mp3" },
-  { title: "Undeniable Presence", src: "audio/mordecais-theme.mp3" },
   { title: "Formal Greeting", src: "audio/stoneheart-title.mp3" },
+   { title: "SHUT UP AND ENJOY THE NIGHTCORE", src: "audio/SHUTUPANDENJOYTHENIGHTCORE.mp3" },
+  { title: "Practicing my Dragon Punches in the Backyard", src: "audio/backyarddragonpunches if it doesnt render properly i'll gameend everyone.mp3" },
+  { title: "Nihilistic Serenade", src: "audio/battle.mp3" },
+  { title: "On Our Way!", src: "audio/casual theme.mp3" },
+  { title: "Trinity", src: "audio/novas-theme.mp3" },
+  { title: "Dark Gold Perfume", src: "audio/darkgoldperfume.mp3" },
+  { title: "The Evils of Truth and Love", src: "evilsoftruthandlove.mp3" },
+   { title: "Let's Get Involved!", src: "audio/gleeful.mp3" },
+  { title: "Cyclical Cynicism", src: "audio/misha limbostage.mp3" },
+  { title: "Smells like Passion, Cigarettes, and Beauty.", src: "audio/passioncigs.mp3" },
+  { title: "Hold it!", src: "audio/pause.mp3" },
+  { title: "Pixel Perfect Performance", src: "audio/pixelperfect.mp3" },
+  { title: "Stone Cold Apathy", src: "audio/stonecoldapathy.mp3" },
+  { title: "One Good Deed a Day Keeps the Inner Demons Away!", src: "audio/tutorial.mp3" },
 ];
 // ----------------------------------------------
 
