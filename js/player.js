@@ -10,6 +10,7 @@
 // `src` is relative to the site root (resolved correctly from any page depth below).
 // Drop your mp3 files into /audio/ and list them here.
 const PLAYLIST = [
+<<<<<<< Updated upstream
   { title: "STONE", src: "audio/coles-theme.mp3" },
   { title: "BURNT HEART", src: "audio/jades-theme.mp3" },
   { title: "ACE UP YOUR SLEEVE!", src: "audio/aces-theme.mp3" },
@@ -17,6 +18,15 @@ const PLAYLIST = [
   { title: "Trinity", src: "audio/novas-theme.mp3" },
   { title: "Undeniable Presence", src: "audio/mordecais-theme.mp3" },
   { title: "Formal Greeting", src: "audio/stoneheart-title.mp3" },
+=======
+  { title: "Cole's Theme", src: "audio/coles-theme.mp3" },
+  { title: "Jade's Theme", src: "audio/jades-theme.mp3" },
+  { title: "Ace's Theme", src: "audio/aces-theme.mp3" },
+  { title: "Beri's Theme", src: "audio/beris-theme.mp3" },
+  { title: "Nova's Theme", src: "audio/novas-theme.mp3" },
+  { title: "Mordecai's Theme", src: "audio/mordecais-theme.mp3" },
+  { title: "STONE:HEART (Title)", src: "audio/stoneheart-title.mp3" },
+>>>>>>> Stashed changes
 ];
 // ----------------------------------------------
 
