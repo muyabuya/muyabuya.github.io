@@ -53,10 +53,6 @@
       background: #000;
     }
 
-    /* The actual page image. object-fit: contain preserves the full frame
-       at its native aspect ratio (16:9 for these pages) regardless of
-       viewport shape, never cropping any art. image-rendering keeps pixel
-       art crisp instead of blurring when the browser scales it up/down. */
     .reader-page-img {
       max-width: 100%;
       max-height: 100%;
@@ -115,6 +111,50 @@
       opacity: 0 !important;
     }
 
+  
+    .dialogue-box {
+      flex-shrink: 0;
+      min-height: 120px;
+      background: var(--bg-dark);
+      border-top: 3px solid var(--marker);
+      padding: 0.9rem 1.5rem;
+      display: none; 
+      flex-direction: column;
+      gap: 0.3rem;
+      z-index: 10;
+    }
+
+    .dialogue-box.has-text {
+      display: flex;
+    }
+
+    .dialogue-speaker {
+      font-family: 'MuyaBuya', 'Caveat', cursive;
+      font-size: 1.3rem;
+      color: #ffd23f;
+      letter-spacing: 1px;
+    }
+
+    .dialogue-text {
+      font-family: 'MuyaBuya', 'Inter', sans-serif;
+      font-size: 1.15rem;
+      line-height: 1.5;
+      color: var(--ink);
+    }
+
+    @media (max-width: 600px) {
+      .dialogue-box {
+        min-height: 100px;
+        padding: 0.7rem 1rem;
+      }
+      .dialogue-speaker {
+        font-size: 1.1rem;
+      }
+      .dialogue-text {
+        font-size: 1rem;
+      }
+    }
+
     .reader-bottombar {
       display: flex;
       align-items: center;
@@ -166,7 +206,7 @@
   <div class="reader-wrap">
 
     <div class="reader-topbar sketch-border">
-      <a href="index.html" class="back-link content">&larr; STONE:HEART</a>
+      <a href="index.html" class="back-link content">&larr; Stone:Heart</a>
       <div class="reader-page-counter content" id="page-counter">Page 1 / 1</div>
     </div>
 
@@ -181,16 +221,28 @@
       </div>
     </div>
 
+    <div class="dialogue-box" id="dialogue-box">
+      <div class="dialogue-speaker" id="dialogue-speaker"></div>
+      <div class="dialogue-text" id="dialogue-text"></div>
+    </div>
+
     <div class="reader-bottombar" id="page-dots"></div>
 
   </div>
 
   <script>
-    // ---- EDIT THIS LIST as you add pages to /stone-heart/pages/chapter1/ ----
+
     const PAGES = [
-      "pages/chapter1/page01.png",
-      "pages/chapter1/page02.png",
-      "pages/chapter1/page03.png",
+      {
+        src: "pages/chapter1/page01.png",
+        speaker: "COLE",
+        text: "This is a sample line, testing the dialogue box and the MuyaBuya font — delete if its good",
+      },
+      // {
+      //   src: "pages/chapter1/page02.png",
+      //   speaker: "COLE",
+      //   text: "...",
+      // },
     ];
     // ---------------------------------------------------------------------
 
@@ -201,6 +253,9 @@
     const dotsWrap = document.getElementById("page-dots");
     const prevZone = document.getElementById("prev-zone");
     const nextZone = document.getElementById("next-zone");
+    const dialogueBox = document.getElementById("dialogue-box");
+    const dialogueSpeaker = document.getElementById("dialogue-speaker");
+    const dialogueText = document.getElementById("dialogue-text");
 
     function buildDots() {
       dotsWrap.innerHTML = "";
@@ -214,8 +269,14 @@
     }
 
     function render() {
-      img.src = PAGES[current];
+      const page = PAGES[current];
+      img.src = page.src;
       counter.textContent = `Page ${current + 1} / ${PAGES.length}`;
+
+      const hasText = Boolean(page.text && page.text.trim().length);
+      dialogueBox.classList.toggle("has-text", hasText);
+      dialogueSpeaker.textContent = page.speaker || "";
+      dialogueText.textContent = page.text || "";
 
       prevZone.classList.toggle("disabled", current === 0);
       nextZone.classList.toggle("disabled", current === PAGES.length - 1);
