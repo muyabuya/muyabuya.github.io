@@ -1,5 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Caveat:wght@600;700&family=Inter:wght@400;500;600&display=swap');
 
+@font-face {
+  font-family: 'MuyaBuya';
+  src: url('../assets/fonts/MuyaBuya.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   --bg: #0B0012;
   --bg-dark: #220436;
@@ -23,7 +31,6 @@ html, body {
   min-height: 100vh;
 }
 
-/* subtle paper grain so flat charcoal doesn't look like a flat div */
 body {
   background-image:
     radial-gradient(circle at 20% 30%, var(--paper-noise) 0%, transparent 50%),
@@ -34,10 +41,6 @@ a {
   color: inherit;
   text-decoration: none;
 }
-
-/* ---------- Hand-drawn border utility ---------- */
-/* Uses a wobbly SVG border-image so corners/edges look marker-drawn,
-   not CSS-perfect. Each component picks a variant. */
 
 .sketch-border {
   position: relative;
@@ -57,7 +60,6 @@ a {
   z-index: 2;
 }
 
-/* ---------- Nav ---------- */
 .site-nav {
   display: flex;
   align-items: center;
@@ -103,7 +105,6 @@ a {
   color: #ffd23f;
 }
 
-/* ---------- Hero title card ---------- */
 .hero-wrap {
   display: flex;
   justify-content: center;
@@ -132,7 +133,6 @@ a {
   margin-top: 0.5rem;
 }
 
-/* ---------- Tiles grid ---------- */
 .tiles {
   display: flex;
   flex-wrap: wrap;
@@ -196,7 +196,6 @@ a {
   color: var(--ink);
 }
 
-/* ---------- Subpage layout ---------- */
 .page-wrap {
   max-width: 1000px;
   margin: 0 auto;
@@ -243,6 +242,20 @@ a {
   padding-top: 2rem;
 }
 
+/* ---------- Footer ---------- */
+footer {
+  text-align: center;
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+}
+
+footer p {
+  font-family: 'Caveat', cursive;
+  font-size: 0.95rem;
+  color: var(--ink-dim);
+  opacity: 0.7;
+}
+
 /* ---------- Site-wide music player ---------- */
 #site-player {
   position: fixed;
@@ -253,11 +266,17 @@ a {
   max-width: 280px;
 }
 
-.player-content {
+.player-content-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 0.7rem 1rem;
+}
+
+.player-row {
   display: flex;
   align-items: center;
   gap: 0.6rem;
-  padding: 0.7rem 1rem;
 }
 
 .player-btn {
@@ -285,6 +304,15 @@ a {
   transform: scale(1.1);
 }
 
+.player-btn:disabled {
+  cursor: default;
+}
+
+.player-btn:disabled:hover {
+  color: var(--ink);
+  transform: none;
+}
+
 .btn-play {
   width: 32px;
   height: 32px;
@@ -300,6 +328,38 @@ a {
   max-width: 130px;
 }
 
+/* ---------- Player progress bar ---------- */
+.player-progress-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.player-time {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.7rem;
+  color: var(--ink-dim);
+  flex-shrink: 0;
+  min-width: 2.4em;
+  text-align: center;
+}
+
+.player-progress-track {
+  flex: 1;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.player-progress-fill {
+  height: 100%;
+  width: 0%;
+  background: #ffd23f;
+  border-radius: 2px;
+  transition: width 0.15s linear;
+}
+
 /* ---------- Gallery / artwork tiles ---------- */
 .gallery-grid {
   display: flex;
@@ -311,7 +371,7 @@ a {
 .art-tile {
   width: 220px;
   height: 220px;
-  overflow: hidden; /* clips anything that would otherwise overflow the box */
+  overflow: hidden;
 }
 
 .art-tile .content {
@@ -324,7 +384,7 @@ a {
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: cover; /* fills the box, cropping rather than stretching or overflowing */
+  object-fit: cover;
   object-position: center;
 }
 
@@ -374,7 +434,7 @@ a {
   max-height: 80vh;
   width: auto;
   height: auto;
-  object-fit: contain; /* shows the WHOLE image at native aspect ratio, no cropping */
+  object-fit: contain;
   box-shadow: 0 10px 40px rgba(0,0,0,0.5);
   border-radius: 4px;
 }
