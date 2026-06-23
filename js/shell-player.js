@@ -22,17 +22,17 @@ const PLAYLIST = [
   { title: "One Good Deed a Day Keeps the Inner Demons Away!", src: "audio/tutorial.mp3" },
 ];
 // ----------------------------------------------
-
+ 
 (function () {
   let order = [];
   let position = 0;
   let playing = false;
   let duckedForComic = false;
-
+ 
   const audio = new Audio();
   audio.volume = 0.6;
   audio.preload = "auto";
-
+ 
   const wrap = document.getElementById("site-player");
   const trackLabel = document.getElementById("player-track-label");
   const btnPlay = wrap.querySelector(".btn-play");
@@ -40,7 +40,26 @@ const PLAYLIST = [
   const iconPause = wrap.querySelector(".icon-pause");
   const btnPrev = wrap.querySelector(".btn-prev");
   const btnNext = wrap.querySelector(".btn-next");
-
+  const timeCurrentEl = document.getElementById("player-time-current");
+  const timeDurationEl = document.getElementById("player-time-duration");
+  const progressFill = document.getElementById("player-progress-fill");
+ 
+  function formatTime(seconds) {
+    if (!isFinite(seconds) || seconds < 0) return "0:00";
+    const m = Math.floor(seconds / 60);
+    const s = Math.floor(seconds % 60);
+    return `${m}:${s.toString().padStart(2, "0")}`;
+  }
+ 
+  function updateProgress() {
+    const duration = audio.duration || 0;
+    const current = audio.currentTime || 0;
+    const pct = duration > 0 ? (current / duration) * 100 : 0;
+    progressFill.style.width = `${pct}%`;
+    timeCurrentEl.textContent = formatTime(current);
+    timeDurationEl.textContent = formatTime(duration);
+  }
+ 
   function shuffledOrder(length) {
     const arr = Array.from({ length }, (_, i) => i);
     for (let i = arr.length - 1; i > 0; i--) {
@@ -49,17 +68,20 @@ const PLAYLIST = [
     }
     return arr;
   }
-
+ 
   function currentTrack() {
     return PLAYLIST[order[position]];
   }
-
+ 
   function loadTrack() {
     const track = currentTrack();
     if (!track) return;
     audio.src = track.src;
+    progressFill.style.width = "0%";
+    timeCurrentEl.textContent = "0:00";
+    timeDurationEl.textContent = "0:00";
   }
-
+ 
   function updateUI() {
     const track = currentTrack();
     iconPlay.style.display = playing ? "none" : "block";
@@ -70,7 +92,7 @@ const PLAYLIST = [
       ? "paused for comic"
       : (track ? track.title : "tap play to start");
   }
-
+ 
   function play() {
     if (duckedForComic) return;
     audio.play().then(() => {
@@ -81,13 +103,13 @@ const PLAYLIST = [
       updateUI();
     });
   }
-
+ 
   function pause() {
     audio.pause();
     playing = false;
     updateUI();
   }
-
+ 
   function next() {
     position = (position + 1) % order.length;
     if (position === 0) order = shuffledOrder(PLAYLIST.length);
@@ -96,7 +118,7 @@ const PLAYLIST = [
     if (wasPlaying) play();
     updateUI();
   }
-
+ 
   function prev() {
     position = (position - 1 + order.length) % order.length;
     const wasPlaying = playing;
@@ -104,18 +126,20 @@ const PLAYLIST = [
     if (wasPlaying) play();
     updateUI();
   }
-
+ 
   audio.addEventListener("ended", next);
-
+  audio.addEventListener("timeupdate", updateProgress);
+  audio.addEventListener("loadedmetadata", updateProgress);
+ 
   btnPlay.addEventListener("click", () => (playing ? pause() : play()));
   btnNext.addEventListener("click", next);
   btnPrev.addEventListener("click", prev);
-
+ 
   // ---- messages from framed pages (Stone:Heart duck/unduck) ----
   window.addEventListener("message", (e) => {
     const data = e.data;
     if (!data || typeof data !== "object") return;
-
+ 
     if (data.type === "comic-music-active") {
       duckedForComic = true;
       pause();
@@ -127,11 +151,11 @@ const PLAYLIST = [
       // site-wide "press play" UX. The button just becomes usable again.
     }
   });
-
+ 
   if (window.drawSketchBorder) {
     window.drawSketchBorder(wrap);
   }
-
+ 
   // ---- initial setup ----
   order = shuffledOrder(PLAYLIST.length);
   loadTrack();
