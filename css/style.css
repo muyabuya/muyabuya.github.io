@@ -23,7 +23,6 @@ html, body {
   min-height: 100vh;
 }
 
-/* subtle paper grain so flat charcoal doesn't look like a flat div */
 body {
   background-image:
     radial-gradient(circle at 20% 30%, var(--paper-noise) 0%, transparent 50%),
@@ -34,10 +33,6 @@ a {
   color: inherit;
   text-decoration: none;
 }
-
-/* ---------- Hand-drawn border utility ---------- */
-/* Uses a wobbly SVG border-image so corners/edges look marker-drawn,
-   not CSS-perfect. Each component picks a variant. */
 
 .sketch-border {
   position: relative;
@@ -57,7 +52,6 @@ a {
   z-index: 2;
 }
 
-/* ---------- Nav ---------- */
 .site-nav {
   display: flex;
   align-items: center;
@@ -103,7 +97,6 @@ a {
   color: #ffd23f;
 }
 
-/* ---------- Hero title card ---------- */
 .hero-wrap {
   display: flex;
   justify-content: center;
@@ -132,7 +125,6 @@ a {
   margin-top: 0.5rem;
 }
 
-/* ---------- Tiles grid ---------- */
 .tiles {
   display: flex;
   flex-wrap: wrap;
@@ -196,7 +188,6 @@ a {
   color: var(--ink);
 }
 
-/* ---------- Subpage layout ---------- */
 .page-wrap {
   max-width: 1000px;
   margin: 0 auto;
@@ -241,6 +232,20 @@ a {
   border-top: 2px dashed var(--ink-dim);
   margin-top: 3rem;
   padding-top: 2rem;
+}
+
+/* ---------- Footer ---------- */
+footer {
+  text-align: center;
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+}
+
+footer p {
+  font-family: 'Caveat', cursive;
+  font-size: 0.95rem;
+  color: var(--ink-dim);
+  opacity: 0.7;
 }
 
 /* ---------- Site-wide music player ---------- */
@@ -311,7 +316,7 @@ a {
 .art-tile {
   width: 220px;
   height: 220px;
-  overflow: hidden; /* clips anything that would otherwise overflow the box */
+  overflow: hidden;
 }
 
 .art-tile .content {
@@ -324,7 +329,7 @@ a {
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: cover; /* fills the box, cropping rather than stretching or overflowing */
+  object-fit: cover;
   object-position: center;
 }
 
@@ -374,7 +379,7 @@ a {
   max-height: 80vh;
   width: auto;
   height: auto;
-  object-fit: contain; /* shows the WHOLE image at native aspect ratio, no cropping */
+  object-fit: contain;
   box-shadow: 0 10px 40px rgba(0,0,0,0.5);
   border-radius: 4px;
 }
